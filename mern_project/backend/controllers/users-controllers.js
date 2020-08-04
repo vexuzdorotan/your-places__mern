@@ -14,7 +14,7 @@ const getUsers = async (req, res, next) => {
     );
     return next(error);
   }
-  res.json({users: users.map(user => user.toObject({ getters: true }))});
+  res.json({ users: users.map((user) => user.toObject({ getters: true })) });
 };
 
 const signup = async (req, res, next) => {
@@ -26,9 +26,9 @@ const signup = async (req, res, next) => {
   }
   const { name, email, password } = req.body;
 
-  let existingUser
+  let existingUser;
   try {
-    existingUser = await User.findOne({ email: email })
+    existingUser = await User.findOne({ email: email });
   } catch (err) {
     const error = new HttpError(
       'Signing up failed, please try again later.',
@@ -36,7 +36,7 @@ const signup = async (req, res, next) => {
     );
     return next(error);
   }
-  
+
   if (existingUser) {
     const error = new HttpError(
       'User exists already, please login instead.',
@@ -44,26 +44,23 @@ const signup = async (req, res, next) => {
     );
     return next(error);
   }
-  
+
   const createdUser = new User({
     name,
     email,
-    image: 'https://live.staticflickr.com/7631/26849088292_36fc52ee90_b.jpg',
+    image: `https://picsum.photos/seed/${Math.random()}/300/300`,
     password,
-    places: []
+    places: [],
   });
 
   try {
     await createdUser.save();
   } catch (err) {
-    const error = new HttpError(
-      'Signing up failed, please try again.',
-      500
-    );
+    const error = new HttpError('Signing up failed, please try again.', 500);
     return next(error);
   }
 
-  res.status(201).json({user: createdUser.toObject({ getters: true })});
+  res.status(201).json({ user: createdUser.toObject({ getters: true }) });
 };
 
 const login = async (req, res, next) => {
@@ -72,7 +69,7 @@ const login = async (req, res, next) => {
   let existingUser;
 
   try {
-    existingUser = await User.findOne({ email: email })
+    existingUser = await User.findOne({ email: email });
   } catch (err) {
     const error = new HttpError(
       'Logging in failed, please try again later.',
@@ -89,7 +86,7 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({message: 'Logged in!'});
+  res.json({ message: 'Logged in!' });
 };
 
 exports.getUsers = getUsers;
