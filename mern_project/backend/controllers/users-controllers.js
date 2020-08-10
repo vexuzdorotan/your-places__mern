@@ -48,7 +48,7 @@ const signup = async (req, res, next) => {
   const createdUser = new User({
     name,
     email,
-    image: `https://picsum.photos/seed/${Math.random()}/300/300`,
+    image: req.file.path,
     password,
     places: [],
   });
