@@ -112,7 +112,7 @@ const UpdatePlace = () => {
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter a valid title."
             onInput={inputHandler}
-            initialValue={loadedPlace.description}
+            initialValue={loadedPlace.title}
             initialValid={true}
           />
           <Input
